@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
-public class Conexion {
+public class Conexion { 
 
     private static String clase = "com.mysql.cj.jdbc.Driver";
 

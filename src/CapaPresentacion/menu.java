@@ -22,6 +22,7 @@ public class menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menu_item_usuario = new javax.swing.JMenuItem();
+        menu_item_tipo_usuario = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,13 +47,21 @@ public class menu extends javax.swing.JFrame {
 
         jMenu1.setText("MANTENIMIENTO");
 
-        menu_item_usuario.setText("USUARIO");
+        menu_item_usuario.setText("TIPO DE USUARIO");
         menu_item_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_item_usuarioActionPerformed(evt);
             }
         });
         jMenu1.add(menu_item_usuario);
+
+        menu_item_tipo_usuario.setText("USUARIO");
+        menu_item_tipo_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_item_tipo_usuarioActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menu_item_tipo_usuario);
 
         jMenuBar1.add(jMenu1);
 
@@ -83,6 +92,10 @@ public class menu extends javax.swing.JFrame {
         frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
         frame.show();
     }//GEN-LAST:event_menu_item_usuarioActionPerformed
+
+    private void menu_item_tipo_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_item_tipo_usuarioActionPerformed
+        
+    }//GEN-LAST:event_menu_item_tipo_usuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,6 +138,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menu_item_tipo_usuario;
     private javax.swing.JMenuItem menu_item_usuario;
     // End of variables declaration//GEN-END:variables
 }

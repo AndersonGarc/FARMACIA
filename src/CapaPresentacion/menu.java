@@ -27,6 +27,9 @@ public class menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(6);
 
+        escritorio.setBackground(new java.awt.Color(0, 0, 0));
+        escritorio.setForeground(new java.awt.Color(0, 0, 0));
+
         jToolBar1.setRollover(true);
 
         escritorio.setLayer(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -46,7 +49,7 @@ public class menu extends javax.swing.JFrame {
 
         jMenu1.setText("MANTENIMIENTO");
 
-        menu_item_usuario.setText("USUARIO");
+        menu_item_usuario.setText("TIPO DE USUARIO");
         menu_item_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_item_usuarioActionPerformed(evt);

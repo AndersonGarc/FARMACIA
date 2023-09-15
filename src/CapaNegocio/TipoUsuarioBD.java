@@ -55,7 +55,7 @@ public class TipoUsuarioBD {
         sql = "update tipousuario set tuNombre=? where idtipoUsuario=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
-            
+
             pst.setString(1, tp.getTuNombre());
             pst.setInt(2, tp.getIdtipoUsuario());
 
@@ -69,15 +69,15 @@ public class TipoUsuarioBD {
     }
 
     public boolean eliminarTipoUsuario(TipoUsuario tp) {
-        sql = "insert into tipousuario(idtipoUsuario,tuNombre) VALUES(null,?)";
+        sql = "delete from tipousuario where idtipoUsuario=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, tp.getTuNombre());
+            pst.setInt(1, tp.getIdtipoUsuario());
 
             pst.executeUpdate();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Problemas en el registrar Cliente", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Problemas en el eliminar tipo de usuario", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

@@ -31,7 +31,7 @@ public class TipoUsuario_IU extends javax.swing.JInternalFrame {
 
     private void advertencia(String mensaje) {
         JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-    }
+    }   
 
     public void reportar() {
         try {

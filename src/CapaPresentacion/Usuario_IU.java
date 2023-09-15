@@ -1,21 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package CapaPresentacion;
 
-/**
- *
- * @author labor
- */
+import javax.swing.JOptionPane;
+
 public class Usuario_IU extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Usuario_IU
-     */
     public Usuario_IU() {
         initComponents();
+    }
+    public void limpiar() {
+        txtDni.setText("");
+        txtNombre.setText("");
+        txtApellidos.setText("");
+        txtCelular.setText("");
+        txtClave.setText("");
+        txtDirecciom.setText("");
+        txtNombre.requestFocus();
+    }
+
+    private void exito(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje, "MENSAJE", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void error(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje, "ERROR", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void advertencia(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -54,6 +65,10 @@ public class Usuario_IU extends javax.swing.JInternalFrame {
         tabla_reporte_usuario = new javax.swing.JTable();
         txtId_tipo_usuario = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jLabel1.setText("DNI");
 
@@ -139,7 +154,7 @@ public class Usuario_IU extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtId_tipo_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );

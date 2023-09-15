@@ -97,7 +97,12 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_item_usuarioActionPerformed
 
     private void menu_item_tipo_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_item_tipo_usuarioActionPerformed
-        
+        Usuario_IU frame = new Usuario_IU();
+        escritorio.add(frame);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension framesize = frame.getSize();
+        frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
+        frame.show();
     }//GEN-LAST:event_menu_item_tipo_usuarioActionPerformed
 
     /**

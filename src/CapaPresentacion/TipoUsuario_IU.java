@@ -1,6 +1,8 @@
 package CapaPresentacion;
 
+import CapaNegocio.TipoUsuarioBD;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class TipoUsuario_IU extends javax.swing.JInternalFrame {
 
@@ -26,7 +28,22 @@ public class TipoUsuario_IU extends javax.swing.JInternalFrame {
         JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
 
- 
+    public void reportar() {
+        try {
+            setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+            DefaultTableModel tabla_temporal;
+            TipoUsuarioBD o_tipo = new TipoUsuarioBD();
+
+            tabla_temporal = o_tipo.reportarTipoUsuario();
+            tabla_reporte_tipo_usuario.setModel(tabla_temporal);
+
+            int canLista = tabla_temporal.getRowCount();
+            txtCantidad.setText("" + canLista);
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        } catch (Exception e) {
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

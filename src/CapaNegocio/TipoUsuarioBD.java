@@ -1,6 +1,7 @@
 package CapaNegocio;
 
 import CapaConexion.Conexion;
+import CapaDatos.TipoUsuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,5 +34,52 @@ public class TipoUsuarioBD {
             JOptionPane.showMessageDialog(null, e, "Error al reportar el tipo de usuario", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+    }
+
+    public boolean registrarTipoUsuario(TipoUsuario tp) {
+        sql = "insert into tipousuario(idtipoUsuario,tuNombre) VALUES(null,?)";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, tp.getTuNombre());
+
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Problemas en el registrar Cliente", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean modificarTipoUsuario(TipoUsuario tp) {
+        sql = "update tipousuario set tuNombre=? where idtipoUsuario=?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            
+            pst.setString(1, tp.getTuNombre());
+            pst.setInt(2, tp.getIdtipoUsuario());
+
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Problemas en el modificar tipo de usuario", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean eliminarTipoUsuario(TipoUsuario tp) {
+        sql = "insert into tipousuario(idtipoUsuario,tuNombre) VALUES(null,?)";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, tp.getTuNombre());
+
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Problemas en el registrar Cliente", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 }

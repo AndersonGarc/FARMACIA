@@ -9,12 +9,12 @@
             <Property name="text" type="java.lang.String" value="MANTENIMIENTO"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menu_item_usuario">
+            <MenuItem class="javax.swing.JMenuItem" name="menu_item_turno">
               <Properties>
-                <Property name="text" type="java.lang.String" value="TIPO DE USUARIO"/>
+                <Property name="text" type="java.lang.String" value="TURNO"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_item_usuarioActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_item_turnoActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menu_item_tipo_usuario">
@@ -23,6 +23,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_item_tipo_usuarioActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menu_item_usuario">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="TIPO DE USUARIO"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_item_usuarioActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

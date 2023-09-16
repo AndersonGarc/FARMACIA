@@ -191,6 +191,11 @@ public class Usuario_IU extends javax.swing.JInternalFrame {
         btnImprimir.setText("IMPRIMIR");
 
         btnCerrar.setText("CERRAR");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("BUSCAR APELLIDO");
 
@@ -493,6 +498,10 @@ public class Usuario_IU extends javax.swing.JInternalFrame {
             error("FALTA EL DNI");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,17 +1,33 @@
 package CapaPresentacion;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class turno_IU extends javax.swing.JInternalFrame {
-
+    
     int fila_seleccionada = -1;
-
+    
     public turno_IU() {
         initComponents();
     }
-    private void limpiar_tabla_formuario(){
-        DefaultTableModel tabla_temporal_turno=(DefaultTableModel)tabla_reporte_turno.getModel();
+
+    private void limpiar_tabla_formuario() {
+        DefaultTableModel tabla_temporal_turno = (DefaultTableModel) tabla_reporte_turno.getModel();
         tabla_temporal_turno.setRowCount(0);
+        
+    }
+    private void exito(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje, "MENSAJE", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void error(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje, "ERROR", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void advertencia(String mensaje) {
+        JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+    public void limpiar(){
         
     }
 
@@ -149,6 +165,11 @@ public class turno_IU extends javax.swing.JInternalFrame {
         jButton4.setText("REGISTRAR");
 
         jButton5.setText("ELIMINAR");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("CERRAR");
 
@@ -189,6 +210,17 @@ public class turno_IU extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (fila_seleccionada > -1) {
+            int aviso=JOptionPane.showConfirmDialog(rootPane, "Estas seguro de eliminar a la fila" +fila_seleccionada);
+            if (rootPaneCheckingEnabled) {
+                exito("SE ELIMINO CORRECTAMENTE");
+            } else {
+                advertencia("TIENES QUE SELECCIONAR UNA FILA");
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

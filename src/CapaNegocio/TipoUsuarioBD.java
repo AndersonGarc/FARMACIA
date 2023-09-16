@@ -15,7 +15,7 @@ public class TipoUsuarioBD {
     private Connection cn = mysql.conectar();
     private String sql;
 
-    public DefaultTableModel reportarTipoUsuario() {
+        public DefaultTableModel reportarTipoUsuario() {
         DefaultTableModel tabla_temporal;
         String[] cabesera = {"CODIGO", "NOMBRE"};
         String[] registros = new String[2];

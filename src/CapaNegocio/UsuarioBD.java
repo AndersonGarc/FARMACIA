@@ -16,17 +16,17 @@ public class UsuarioBD {
 
     public DefaultTableModel reportarUsuarios() {
         DefaultTableModel tabla_temporal;
-        String[] titulos = {"DNI", "NOMBRES", "APELLIDOS", "DIRECCION", "CLAVE", "CELULAR", "TIPO DE USUARIO", "TIENDA"};
+        String[] titulos = {"DNI", "NOMBRES", "APELLIDOS", "DIRECCION", "CLAVE", "CELULAR", "TIPO_USUARIO", "TIENDA"};
         String[] registros = new String[8];
         tabla_temporal = new DefaultTableModel(null, titulos);
-        sql = "select uDni,uNombre,uApellidos,uDireccion,uClave,uCelular,idtipoUsuario,tienda from usuario as u "
-                + "inner join tipousuario as tu on u.idtipoUsuario=tu.idtipoUsuario ";
+        sql = "select uDni,uNombre,uApellidos,uDireccion,uClave,uCelular,tuNombre,tienda from usuario as u "
+                + "inner join tipousuario as tu on u.tp_idtipoUsuario=tu.idtipoUsuario";
 
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next()) { 
                 registros[0] = rs.getString("uDni");
                 registros[1] = rs.getString("uNombre");
                 registros[2] = rs.getString("uApellidos");
@@ -40,7 +40,7 @@ public class UsuarioBD {
             }
             return tabla_temporal;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al reportar BD");
+            JOptionPane.showMessageDialog(null,e, "Error al reportar BD",JOptionPane.ERROR_MESSAGE);
             return null;
         }
 
@@ -48,7 +48,7 @@ public class UsuarioBD {
 
     public boolean registrarUsuario(Usuario u) {
         boolean rpta = false;
-        sql = "insert into usuario(uDni,uNombre,uApellidos,uDireccion,uClave,uCelular,idtipoUsuario,tienda)value (?,?,?,?,?,?,?,?)";
+        sql = "insert into usuario(uDni,uNombre,uApellidos,uDireccion,uClave,uCelular,tp_idtipoUsuario,tienda)values(?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
 
@@ -64,7 +64,7 @@ public class UsuarioBD {
             rpta = pst.executeUpdate() == 1 ? true : false;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "error al registrar");
+            JOptionPane.showMessageDialog(null,e, "error al registrar",JOptionPane.ERROR_MESSAGE);
             return rpta;
         }
         return rpta;
@@ -72,7 +72,7 @@ public class UsuarioBD {
 
     public boolean modificarUsuario(Usuario u) {
         boolean rpta = false;
-        sql = "update usuario set uNombre=?,uApellidos=?,uDireccion=?,uClave=?,uCelular=?,idtipoUsuario=?,tienda=? where uDni=? ";
+        sql = "update usuario set uNombre=?,uApellidos=?,uDireccion=?,uClave=?,uCelular=?,tp_idtipoUsuario=?,tienda=? where uDni=? ";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
 
@@ -94,14 +94,14 @@ public class UsuarioBD {
         return rpta;
     }
 
-    public boolean eliminarTipoUsuario(Usuario u) {
+    public boolean eliminarUsuario(String dni) {
         boolean rpta = false;
         sql = "delete from usuario where uDni=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, u.getuDni());
+            pst.setString(1,dni);
 
-            rpta =  pst.executeUpdate() == 1 ? true : false;
+            rpta = pst.executeUpdate() == 1 ? true : false;
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Problemas en el eliminar usuario", JOptionPane.ERROR_MESSAGE);

@@ -46,6 +46,7 @@ public class TipoUsuario_IU extends javax.swing.JInternalFrame {
             txtCantidad.setText("" + canLista);
             setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         } catch (Exception e) {
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         }
     }
 

@@ -13,6 +13,8 @@ public class TipoUsuario {
         this.tuNombre = tuNombre;
     }
 
+   
+
     public int getIdtipoUsuario() {
         return idtipoUsuario;
     }

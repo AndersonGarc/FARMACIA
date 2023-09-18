@@ -1,5 +1,6 @@
 package CapaPresentacion;
 
+import CapaDatos.Marca;
 import java.awt.Dimension;
 
 public class menu extends javax.swing.JFrame {
@@ -19,6 +20,7 @@ public class menu extends javax.swing.JFrame {
         menu_item_turno = new javax.swing.JMenuItem();
         menu_item_tipo_usuario = new javax.swing.JMenuItem();
         menu_item_usuario = new javax.swing.JMenuItem();
+        menu_item_marca = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -70,6 +72,14 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(menu_item_usuario);
 
+        menu_item_marca.setText("MARCA");
+        menu_item_marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_item_marcaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menu_item_marca);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -118,6 +128,15 @@ public class menu extends javax.swing.JFrame {
         frame.show();
     }//GEN-LAST:event_menu_item_turnoActionPerformed
 
+    private void menu_item_marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_item_marcaActionPerformed
+        Marca_IU frame = new Marca_IU();
+        escritorio.add(frame);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension framesize = frame.getSize();
+        frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
+        frame.show();
+    }//GEN-LAST:event_menu_item_marcaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -159,6 +178,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menu_item_marca;
     private javax.swing.JMenuItem menu_item_tipo_usuario;
     private javax.swing.JMenuItem menu_item_turno;
     private javax.swing.JMenuItem menu_item_usuario;

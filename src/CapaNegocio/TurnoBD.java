@@ -15,12 +15,12 @@ public class TurnoBD {
     private String sql;
 
     public DefaultTableModel reportarTurno() {
-        DefaultTableModel tabla_temporal;
+        DefaultTableModel modelo;
         String[] titulos = {"CODIGO", "DESCRIPCION", "INICIO", "FIN", "USUARIO"};
         String[] registros = new String[5];
-        tabla_temporal = new DefaultTableModel(null, titulos);
-        sql = "select uDni,uNombre,uApellidos,uDireccion,uClave,uCelular,idtipoUsuario,tienda from usuario as u \n"
-                + "inner join tipousuario as tu on u.tp_idtipoUsuario=tu.idtipoUsuario";
+        modelo = new DefaultTableModel(null, titulos);
+        sql = "select idturno,descripcion,inicio,fin,concat(uNombre,' ',uApellidos)as usuario from turno as t "
+                + "inner join usuario as u on t.u_uDni=u.uDni";
 
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -31,15 +31,16 @@ public class TurnoBD {
                 registros[1] = rs.getString("descripcion");
                 registros[2] = rs.getString("inicio");
                 registros[3] = rs.getString("fin");
-                registros[4] = rs.getString("u_uDni");
+                registros[4] = rs.getString("usuario");
 
-                tabla_temporal.addRow(registros);
+                modelo.addRow(registros);
             }
-            return tabla_temporal;
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error al reportar Turno BD", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+        return modelo;
 
     }
 
@@ -76,7 +77,7 @@ public class TurnoBD {
 
     public boolean registrarTurno(Turno t) {
         boolean rta = false;
-        sql = "";
+        sql = "insert into turno(idturno,descripcion,inicio,fin,u_uDni)values(null,?,?,?,?);";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, t.getDescripcion());
@@ -94,15 +95,16 @@ public class TurnoBD {
 
     public boolean eliminarTurno(int idturno) {
         boolean rpta = false;
-        sql = "";
+        sql = "delete from turno where idturno=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, idturno);
+
             rpta = pst.executeLargeUpdate() == 1 ? true : false;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "error al eliminar", JOptionPane.ERROR_MESSAGE);
             return rpta;
         }
-        return rpta;    
+        return rpta;
     }
 }

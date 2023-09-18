@@ -1,21 +1,29 @@
 package CapaPresentacion;
 
+import CapaDatos.Turno;
+import CapaNegocio.TurnoBD;
+import CapaNegocio.UsuarioBD;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class turno_IU extends javax.swing.JInternalFrame {
-    
+
     int fila_seleccionada = -1;
-    
+
     public turno_IU() {
         initComponents();
+        reporte();
+        txtUsuario.setEnabled(false);
     }
 
     private void limpiar_tabla_formuario() {
         DefaultTableModel tabla_temporal_turno = (DefaultTableModel) tabla_reporte_turno.getModel();
         tabla_temporal_turno.setRowCount(0);
-        
+
     }
+
     private void exito(String mensaje) {
         JOptionPane.showConfirmDialog(this, mensaje, "MENSAJE", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
@@ -27,8 +35,44 @@ public class turno_IU extends javax.swing.JInternalFrame {
     private void advertencia(String mensaje) {
         JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
-    public void limpiar(){
-        
+
+    public void limpiar() {
+        txtdni.setText("");
+        txtUsuario.setText("");
+        txtHoraI.setText("");
+        txtHoraFin.setText("");
+        cmbTurno.setSelectedItem(0);
+        fila_seleccionada = -1;
+    }
+
+    public void reporte() {
+        try {
+            setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+            limpiar_tabla_formuario();
+            DefaultTableModel tabla_tempoarl_turno = (DefaultTableModel) tabla_reporte_turno.getModel();
+
+            DefaultTableModel tabla_temporal;
+            TurnoBD o_TurnoBD = new TurnoBD();
+            tabla_temporal = o_TurnoBD.reportarTurno();
+
+            int cat = tabla_temporal.getRowCount();
+            for (int i = 0; i < cat; i++) {
+                int idturno = Integer.parseInt(tabla_temporal.getValueAt(i, 0).toString());
+                String descripcion = tabla_temporal.getValueAt(i, 1).toString();
+                String inicio = tabla_temporal.getValueAt(i, 2).toString();
+                String fin = tabla_temporal.getValueAt(i, 3).toString();
+                String uDmi = tabla_temporal.getValueAt(i, 4).toString();
+
+                Object[] data = {idturno, descripcion, inicio, fin, uDmi};
+                tabla_tempoarl_turno.addRow(data);
+
+            }
+            tabla_reporte_turno.setModel(tabla_tempoarl_turno);
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        } catch (Exception e) {
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -44,21 +88,21 @@ public class turno_IU extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtdni = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtUsuario = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtHoraI = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtHoraFin = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbTurno = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_reporte_turno = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
@@ -73,9 +117,36 @@ public class turno_IU extends javax.swing.JInternalFrame {
 
         jLabel1.setText("DNI");
 
+        txtdni.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtdniFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtdniFocusLost(evt);
+            }
+        });
+        txtdni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtdniKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("USUARIO");
 
-        jButton2.setText("BUSCAR");
+        txtUsuario.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/lupa.gif"))); // NOI18N
+        btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,10 +160,11 @@ public class turno_IU extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField2))
+                        .addComponent(txtdni, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtUsuario))
                 .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
@@ -102,12 +174,12 @@ public class turno_IU extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2)))
+                        .addComponent(txtdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -115,9 +187,39 @@ public class turno_IU extends javax.swing.JInternalFrame {
 
         jLabel3.setText("HORA DE INICIO");
 
+        txtHoraI.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtHoraIFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtHoraIFocusLost(evt);
+            }
+        });
+        txtHoraI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtHoraIKeyPressed(evt);
+            }
+        });
+
         jLabel4.setText("HORA FINAL");
 
+        txtHoraFin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtHoraFinFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtHoraFinFocusLost(evt);
+            }
+        });
+        txtHoraFin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtHoraFinKeyPressed(evt);
+            }
+        });
+
         jLabel5.setText("TURNO");
+
+        cmbTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "turno 1" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -127,15 +229,15 @@ public class turno_IU extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtHoraI, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -144,11 +246,11 @@ public class turno_IU extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoraI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -157,21 +259,39 @@ public class turno_IU extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "CODIGO", "DESCRIPCION", "HORA_INICIO", "HORA_FINAL", "USUARIO"
             }
         ));
         jScrollPane1.setViewportView(tabla_reporte_turno);
 
-        jButton4.setText("REGISTRAR");
-
-        jButton5.setText("ELIMINAR");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/report.png"))); // NOI18N
+        btnRegistrar.setText("REGISTRAR");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        btnRegistrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnRegistrarKeyPressed(evt);
             }
         });
 
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/bin_empty.png"))); // NOI18N
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cross.png"))); // NOI18N
         jButton6.setText("CERRAR");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -184,9 +304,9 @@ public class turno_IU extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(btnRegistrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6)))
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -202,35 +322,169 @@ public class turno_IU extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
+                    .addComponent(btnRegistrar)
+                    .addComponent(btnEliminar)
                     .addComponent(jButton6))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if (fila_seleccionada > -1) {
-            int aviso=JOptionPane.showConfirmDialog(rootPane, "Estas seguro de eliminar a la fila" +fila_seleccionada);
-            if (rootPaneCheckingEnabled) {
-                exito("SE ELIMINO CORRECTAMENTE");
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (fila_seleccionada >-1) {
+            int aviso = JOptionPane.showConfirmDialog(rootPane, "Estas seguro de eliminar a la fila" + fila_seleccionada);
+            if (aviso == 0) {
+                TurnoBD o_TurnoBD = new TurnoBD();
+                int idturno = Integer.parseInt(tabla_reporte_turno.getValueAt(fila_seleccionada, 0).toString());
+                boolean rpta = o_TurnoBD.eliminarTurno(idturno);
+                if (rpta) {
+                    exito("SE ELIMINO CORRECTAMENTE");
+                    reporte();
+                    limpiar();
+                } else {
+                    error("TIENES PROBLEMAS AL ELIMINAR");
+                }
+
             } else {
                 advertencia("TIENES QUE SELECCIONAR UNA FILA");
             }
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            if (txtdni.getText().length() > 0) {
+                DefaultTableModel tabla_temporal;
+                UsuarioBD o_UsuarioBD = new UsuarioBD();
+                tabla_temporal = o_UsuarioBD.buscarUsuarioXdni(txtdni.getText());
+                int cant = tabla_temporal.getRowCount();
+                if (cant > 0) {
+                    String nombre = tabla_temporal.getValueAt(0, 1).toString();
+                    String apellidos = tabla_temporal.getValueAt(0, 2).toString();
+                    txtUsuario.setText(apellidos + " " + nombre);
+                } else {
+                    advertencia("no ecxiste este usuario");
+                    txtdni.setText("");
+                    txtdni.requestFocus();
+                }
+            } else {
+                advertencia("tienes que ingresar un dni");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "error al intentar buscar usuario", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtdniFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtdniFocusGained
+        txtdni.setBackground(Color.yellow);
+    }//GEN-LAST:event_txtdniFocusGained
+
+    private void txtdniFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtdniFocusLost
+        txtdni.setBackground(Color.white);
+    }//GEN-LAST:event_txtdniFocusLost
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        try {
+            if (txtdni.getText().length() > 0) {
+                if (txtHoraI.getText().length() > 0) {
+                    if (txtHoraFin.getText().length() > 0) {
+                        if (!cmbTurno.getSelectedItem().equals("Seleccionar turno")) {
+                            Turno o_Turno = new Turno();
+                            TurnoBD o_TurnoBD = new TurnoBD();
+                            o_Turno.setDescripcion(cmbTurno.getSelectedItem().toString());
+                            o_Turno.setInicio(txtHoraI.getText());
+                            o_Turno.setFin(txtHoraFin.getText());
+                            o_Turno.setU_uDni(txtdni.getText());
+                            boolean rpta = o_TurnoBD.registrarTurno(o_Turno);
+                            if (rpta) {
+                                exito("Se registro con ecxito");
+                                reporte();
+                                limpiar();
+                            } else {
+                                error("Tienes problemas para registrar");
+                            }
+
+                        } else {
+                            advertencia("Seleccione un turno");
+                            cmbTurno.requestFocus();
+                        }
+                    } else {
+                        advertencia("Ingrese la hora final");
+                        txtHoraFin.requestFocus();
+                    }
+                } else {
+                    advertencia("Ingrese la hora de inicio");
+                    txtHoraI.requestFocus();
+                }
+            } else {
+                advertencia("Ingrese su dni");
+                txtdni.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al registrar turno", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtHoraIFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoraIFocusGained
+        txtHoraI.setBackground(Color.yellow);
+    }//GEN-LAST:event_txtHoraIFocusGained
+
+    private void txtHoraFinFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoraFinFocusGained
+        txtHoraFin.setBackground(Color.yellow);
+    }//GEN-LAST:event_txtHoraFinFocusGained
+
+    private void txtHoraIFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoraIFocusLost
+        txtHoraI.setBackground(Color.white);
+    }//GEN-LAST:event_txtHoraIFocusLost
+
+    private void txtHoraFinFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoraFinFocusLost
+        txtHoraFin.setBackground(Color.white);
+    }//GEN-LAST:event_txtHoraFinFocusLost
+
+    private void txtdniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdniKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnBuscar.requestFocus();
+        }
+    }//GEN-LAST:event_txtdniKeyPressed
+
+    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnBuscar.doClick();
+        }
+    }//GEN-LAST:event_btnBuscarKeyPressed
+
+    private void txtHoraIKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoraIKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtHoraFin.requestFocus();
+        }
+    }//GEN-LAST:event_txtHoraIKeyPressed
+
+    private void txtHoraFinKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoraFinKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cmbTurno.requestFocus();
+        }
+    }//GEN-LAST:event_txtHoraFinKeyPressed
+
+    private void btnRegistrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnRegistrarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnRegistrar.doClick();
+        }
+    }//GEN-LAST:event_btnRegistrarKeyPressed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cmbTurno;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -239,10 +493,10 @@ public class turno_IU extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTable tabla_reporte_turno;
+    private javax.swing.JTextField txtHoraFin;
+    private javax.swing.JTextField txtHoraI;
+    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtdni;
     // End of variables declaration//GEN-END:variables
 }

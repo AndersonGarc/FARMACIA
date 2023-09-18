@@ -26,7 +26,7 @@ public class UsuarioBD {
             PreparedStatement pst = cn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
-            while (rs.next()) { 
+            while (rs.next()) {
                 registros[0] = rs.getString("uDni");
                 registros[1] = rs.getString("uNombre");
                 registros[2] = rs.getString("uApellidos");
@@ -40,7 +40,7 @@ public class UsuarioBD {
             }
             return tabla_temporal;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e, "Error al reportar BD",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Error al reportar BD", JOptionPane.ERROR_MESSAGE);
             return null;
         }
 
@@ -64,7 +64,7 @@ public class UsuarioBD {
             rpta = pst.executeUpdate() == 1 ? true : false;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e, "error al registrar",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "error al registrar", JOptionPane.ERROR_MESSAGE);
             return rpta;
         }
         return rpta;
@@ -99,7 +99,7 @@ public class UsuarioBD {
         sql = "delete from usuario where uDni=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1,dni);
+            pst.setString(1, dni);
 
             rpta = pst.executeUpdate() == 1 ? true : false;
 
@@ -108,5 +108,38 @@ public class UsuarioBD {
             return rpta;
         }
         return rpta;
+    }
+
+    public DefaultTableModel buscarUsuarioXdni(String dni) {
+        DefaultTableModel tabla_temporal;
+        String[] titulos = {"DNI", "NOMBRE", "APELLIDOS", "DIRECCION", "CLAVE", "CELULAR", "TIPO_USUARIO", "TIENDA"};
+        String[] registros = new String[8];
+        tabla_temporal = new DefaultTableModel(null, titulos);
+        sql = "select uDni,uNombre,uApellidos,uDireccion,uClave,uCelular,tuNombre,tienda from usuario as u "
+                + "inner join tipousuario as tu on u.tp_idtipoUsuario=tu.idtipoUsuario "
+                + "where uDni=?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, dni);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                registros[0] = rs.getString("uDni");
+                registros[1] = rs.getString("uNombre");
+                registros[2] = rs.getString("uApellidos");
+                registros[3] = rs.getString("uDireccion");
+                registros[4] = rs.getString("uClave");
+                registros[5] = rs.getString("uCelular");
+                registros[6] = rs.getString("tuNombre");
+                registros[7] = rs.getString("tienda");
+                tabla_temporal.addRow(registros);
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al buscar Turno BD", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        return tabla_temporal;
+
     }
 }

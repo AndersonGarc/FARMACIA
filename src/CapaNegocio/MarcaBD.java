@@ -21,7 +21,7 @@ public class MarcaBD {
         String[] titulos = {"CODIGO", "NOMBRE"};
         String[] registros = new String[2];
         tabla_temporal = new DefaultTableModel(null, titulos);
-        sql = "";
+        sql = "select idmarca,maNombre from marca";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
@@ -39,7 +39,7 @@ public class MarcaBD {
 
     public boolean registraMarca(Marca m) {
         boolean rpta = false;
-        sql = "";
+        sql = "insert into marca(idmarca,maNombre)values(0,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, m.getMaNombre());

@@ -54,7 +54,7 @@ public class MarcaBD {
 
     public boolean modificarMarca(Marca m) {
         boolean rpta = false;
-        sql = "";
+        sql = "update marca set maNombre=? where idmarca=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, m.getMaNombre());
@@ -71,7 +71,7 @@ public class MarcaBD {
 
     public boolean eliminarMarca(int idmarca) {
         boolean rpta = false;
-        sql = "";
+        sql = "delete from marca where idmarca=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, idmarca);
@@ -90,12 +90,12 @@ public class MarcaBD {
         String[] titulos = {"CODIGO", "NOMBRE"};
         String[] registros = new String[2];
         tabla_temporal = new DefaultTableModel(null, titulos);
-        sql = "";
+        sql = "select idmarca,maNombre from marca where maNombre like ?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, "%" + nombre + "%");
             ResultSet rs = pst.executeQuery();
-            
+
             while (rs.next()) {
                 registros[0] = rs.getString("idmarca");
                 registros[1] = rs.getString("maNombre");

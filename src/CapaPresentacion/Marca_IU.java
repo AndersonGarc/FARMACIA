@@ -339,6 +339,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
 
             txtCodigo.setText(tabla_reporte_marca.getValueAt(fila_seleccionada, 0).toString());
             txtNomre.setText(tabla_reporte_marca.getValueAt(fila_seleccionada, 1).toString());
+            txtNomre.requestFocus();
         }
     }//GEN-LAST:event_tabla_reporte_marcaMousePressed
 
@@ -353,9 +354,10 @@ public class Marca_IU extends javax.swing.JInternalFrame {
 
                     boolean rpta = o_MarcaBD.modificarMarca(o_Marca);
                     if (rpta) {
-                        exito("Se registro con ecxito");
+                        exito("Se modifico con ecxito");
                         reporte_marca();
                         limpiar();
+                        txtNomre.requestFocus();
                     } else {
                         error("Tienes problemas para modificar");
                     }
@@ -384,6 +386,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
                         exito("Se elimino con ecxito");
                         reporte_marca();
                         limpiar();
+                        txtNomre.requestFocus();
 
                     } else {
                         error("Tienes problemas para eliminar");
@@ -392,10 +395,9 @@ public class Marca_IU extends javax.swing.JInternalFrame {
 
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese un codigo");
-
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error al eliminar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Error al eliminar marca", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 package CapaDatos;
 
 /**
@@ -7,29 +5,24 @@ package CapaDatos;
  * @author ANDER
  */
 public class Categoria {
-    
-=======
-package CapaDatos;
 
-public class Categoria {
-
-    private int idcategoria;
+    private int idCategoria;
     private String caNombre;
 
     public Categoria() {
     }
 
-    public Categoria(int idcategoria, String caNombre) {
-        this.idcategoria = idcategoria;
+    public Categoria(int idCategoria, String caNombre) {
+        this.idCategoria = idCategoria;
         this.caNombre = caNombre;
     }
 
-    public int getIdcategoria() {
-        return idcategoria;
+    public int getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setIdcategoria(int idcategoria) {
-        this.idcategoria = idcategoria;
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public String getCaNombre() {
@@ -40,5 +33,4 @@ public class Categoria {
         this.caNombre = caNombre;
     }
 
->>>>>>> CapaDatos
 }

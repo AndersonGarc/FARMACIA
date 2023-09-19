@@ -75,8 +75,10 @@ public class Marca_IU extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("LABORATORIO");
 
+        jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setText("CODIGO");
 
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("NOMBRE");
 
         txtNomre.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -91,12 +93,17 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomreKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNomreKeyTyped(evt);
+            }
         });
 
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setText("CANTIDAD");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Laboratorio"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Laboratorio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 14))); // NOI18N
 
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel4.setText("LABORATORIO");
 
         txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -105,6 +112,14 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtBuscarFocusLost(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
             }
         });
 
@@ -137,8 +152,14 @@ public class Marca_IU extends javax.swing.JInternalFrame {
 
             }
         ));
+        tabla_reporte_marca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabla_reporte_marcaMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla_reporte_marca);
 
+        btnRegistrar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/report.png"))); // NOI18N
         btnRegistrar.setText("REGISTRAR");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -152,15 +173,34 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             }
         });
 
+        btnModificar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/book_edit.png"))); // NOI18N
         btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
+        btnEliminar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/bin_empty.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
+        btnLimpiar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/page.png"))); // NOI18N
         btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
+        btnCerrar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cross.png"))); // NOI18N
         btnCerrar.setText("CERRAR");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -184,7 +224,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(btnCerrar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -199,7 +239,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNomre))))
                 .addGap(17, 17, 17))
         );
@@ -227,7 +267,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
                     .addComponent(btnEliminar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnCerrar))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -239,23 +279,23 @@ public class Marca_IU extends javax.swing.JInternalFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            if (txtNomre.getText().length()>0) {
-                if (txtCodigo.getText().length()==0) {
-                    Marca o_Marca=new Marca();
-                    MarcaBD o_MarcaBD=new MarcaBD();
+            if (txtNomre.getText().length() > 0) {
+                if (txtCodigo.getText().length() == 0) {
+                    Marca o_Marca = new Marca();
+                    MarcaBD o_MarcaBD = new MarcaBD();
                     o_Marca.setMaNombre(txtNomre.getText().toUpperCase().trim());
-                    boolean rpta=o_MarcaBD.registraMarca(o_Marca);
+                    boolean rpta = o_MarcaBD.registraMarca(o_Marca);
                     if (rpta) {
                         exito("se registro con ecxito");
                         reporte_marca();
                         limpiar();
                         txtNomre.requestFocus();
-                        
+
                     } else {
                         error("Tienes problemas al registrar marca");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null,"No puedes registrar por que ya existe","error",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No puedes registrar por que ya existe", "error", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 error("Ingrese nombre");
@@ -292,6 +332,111 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             btnRegistrar.requestFocus();
         }
     }//GEN-LAST:event_txtNomreKeyPressed
+
+    private void tabla_reporte_marcaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_reporte_marcaMousePressed
+        if (evt.getClickCount() == 2) {
+            int fila_seleccionada = tabla_reporte_marca.getSelectedRow();
+
+            txtCodigo.setText(tabla_reporte_marca.getValueAt(fila_seleccionada, 0).toString());
+            txtNomre.setText(tabla_reporte_marca.getValueAt(fila_seleccionada, 1).toString());
+        }
+    }//GEN-LAST:event_tabla_reporte_marcaMousePressed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            if (txtCodigo.getText().length() > 0) {
+                if (txtNomre.getText().length() > 0) {
+                    Marca o_Marca = new Marca();
+                    MarcaBD o_MarcaBD = new MarcaBD();
+                    o_Marca.setIdmarca(Integer.parseInt(txtCodigo.getText().trim()));
+                    o_Marca.setMaNombre(txtNomre.getText().toUpperCase().trim());
+
+                    boolean rpta = o_MarcaBD.modificarMarca(o_Marca);
+                    if (rpta) {
+                        exito("Se registro con ecxito");
+                        reporte_marca();
+                        limpiar();
+                    } else {
+                        error("Tienes problemas para modificar");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "El campo no puede estar vacio");
+                    txtNomre.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el codigo a modicar");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al modifcar", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            if (txtCodigo.getText().length() > 0) {
+                int aviso = JOptionPane.showConfirmDialog(rootPane, "Estas seguro de eliminar");
+                if (aviso == 0) {
+                    int idmarca = Integer.parseInt(txtCodigo.getText().trim());
+                    MarcaBD o_MarcaBD = new MarcaBD();
+                    boolean rpta = o_MarcaBD.eliminarMarca(idmarca);
+                    if (rpta) {
+                        exito("Se elimino con ecxito");
+                        reporte_marca();
+                        limpiar();
+
+                    } else {
+                        error("Tienes problemas para eliminar");
+                    }
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese un codigo");
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al eliminar", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        try {
+            setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+            DefaultTableModel tabla_temporal;
+            String valor = txtBuscar.getText();
+            MarcaBD oMarcaBD = new MarcaBD();
+            tabla_temporal = oMarcaBD.buscarMarca(valor);
+            tabla_reporte_marca.setModel(tabla_temporal);
+            int cantLista = tabla_temporal.getRowCount();
+            txtCantidad.setText("" + cantLista);
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        } catch (Exception e) {
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtCodigo.setText("");
+        txtNomre.setText("");
+        txtNomre.requestFocus();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtNomreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomreKeyTyped
+        char validar = evt.getKeyChar();
+        if (Character.isDigit(validar)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNomreKeyTyped
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        char validar = evt.getKeyChar();
+        if (Character.isDigit(validar)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

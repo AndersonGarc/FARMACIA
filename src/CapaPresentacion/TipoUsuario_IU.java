@@ -3,6 +3,7 @@ package CapaPresentacion;
 import CapaDatos.TipoUsuario;
 import CapaNegocio.TipoUsuarioBD;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -82,6 +83,14 @@ public class TipoUsuario_IU extends javax.swing.JInternalFrame {
                 txtNombreFocusGained(evt);
             }
         });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         tabla_reporte_tipo_usuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -103,6 +112,11 @@ public class TipoUsuario_IU extends javax.swing.JInternalFrame {
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
+            }
+        });
+        btnRegistrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnRegistrarKeyPressed(evt);
             }
         });
 
@@ -306,6 +320,26 @@ public class TipoUsuario_IU extends javax.swing.JInternalFrame {
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char validar = evt.getKeyChar();
+        if (Character.isDigit(validar)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnRegistrar.requestFocus();
+        }
+    }//GEN-LAST:event_txtNombreKeyPressed
+
+    private void btnRegistrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnRegistrarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnRegistrar.doClick();
+        }
+    }//GEN-LAST:event_btnRegistrarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

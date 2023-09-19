@@ -129,6 +129,9 @@ public class turno_IU extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtdniKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtdniKeyTyped(evt);
+            }
         });
 
         jLabel2.setText("USUARIO");
@@ -262,6 +265,11 @@ public class turno_IU extends javax.swing.JInternalFrame {
                 "CODIGO", "DESCRIPCION", "HORA_INICIO", "HORA_FINAL", "USUARIO"
             }
         ));
+        tabla_reporte_turno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabla_reporte_turnoMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla_reporte_turno);
 
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/report.png"))); // NOI18N
@@ -342,12 +350,13 @@ public class turno_IU extends javax.swing.JInternalFrame {
                     exito("SE ELIMINO CORRECTAMENTE");
                     reporte();
                     limpiar();
+                    txtdni.requestFocus();
                 } else {
                     error("TIENES PROBLEMAS AL ELIMINAR");
                 }
 
             } else {
-                advertencia("TIENES QUE SELECCIONAR UNA FILA");
+                error("TIENES QUE SELECCIONAR UNA FILA");
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -475,6 +484,17 @@ public class turno_IU extends javax.swing.JInternalFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void tabla_reporte_turnoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_reporte_turnoMousePressed
+        fila_seleccionada=tabla_reporte_turno.getSelectedRow();
+    }//GEN-LAST:event_tabla_reporte_turnoMousePressed
+
+    private void txtdniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdniKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c) || txtdni.getText().length() >= 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtdniKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

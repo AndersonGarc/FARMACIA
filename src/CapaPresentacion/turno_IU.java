@@ -410,6 +410,7 @@ public class turno_IU extends javax.swing.JInternalFrame {
                                 exito("Se registro con ecxito");
                                 reporte();
                                 limpiar();
+                                txtdni.requestFocus();
                             } else {
                                 error("Tienes problemas para registrar");
                             }

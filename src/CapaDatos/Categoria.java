@@ -4,7 +4,7 @@ package CapaDatos;
  *
  * @author ANDER
  */
-public class Categoria {
+    public class Categoria {
 
     private int idCategoria;
     private String caNombre;

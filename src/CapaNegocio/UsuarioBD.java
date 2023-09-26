@@ -1,11 +1,14 @@
 package CapaNegocio;
 
 import CapaConexion.Conexion;
+import CapaDatos.Turno;
 import CapaDatos.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -156,7 +159,7 @@ public class UsuarioBD {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, "%" + apellidos + "%");
             pst.setString(2, "%" + apellidos + "%");
-            ResultSet rs=pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 registros[0] = rs.getString("uDni");
                 registros[1] = rs.getString("uNombre");
@@ -169,11 +172,68 @@ public class UsuarioBD {
 
                 tabla_temporal.addRow(registros);
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "EROOR AL BUSCAR USUARIO", JOptionPane.ERROR_MESSAGE);
             return null;
         }
         return tabla_temporal;
+    }
+
+    public List<Usuario> login(String dni, String clave) {
+        List<Usuario> lista = new ArrayList<>();
+        sql = "select uDni,uNombre,uApellidos,uDireccion,uClave,uCelular,tp_idtipoUsuario,tienda from usuario "
+                + "where uDni=? and uClave=?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, dni);
+            pst.setString(2, clave);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                Usuario o_Usuario = new Usuario();
+
+                o_Usuario.setuDni(rs.getString(1));
+                o_Usuario.setuNombre(rs.getString(2));
+                o_Usuario.setuApellidos(rs.getString(3));
+                o_Usuario.setuDireccion(rs.getString(4));
+                o_Usuario.setuClave(rs.getString(5));
+                o_Usuario.setuCelular(rs.getString(6));
+                o_Usuario.setIdtipoUsuario(rs.getInt(7));
+                o_Usuario.setTienda(rs.getString(8));
+
+                lista.add(o_Usuario);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "error en el login", JOptionPane.ERROR_MESSAGE);
+        }
+        return lista;
+    }
+
+    public List<Turno> buscarTurno(String inicio, String fin, String u_uDni) {
+        List<Turno> lista = new ArrayList<>();
+        sql = "select idturno,descripcion,inicio,fin,u_uDni from turno where (inicio<? and fin>?) and u_uDni=?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, inicio);
+            pst.setString(2, fin);
+            pst.setString(2, u_uDni);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                Turno o_Turno = new Turno();
+
+                o_Turno.setIdturno(rs.getInt(1));
+                o_Turno.setDescripcion(rs.getString(2));
+                o_Turno.setInicio(rs.getString(3));
+                o_Turno.setFin(rs.getString(4));
+                o_Turno.setU_uDni(rs.getString(5));
+
+                lista.add(o_Turno);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "error al buscar turno", JOptionPane.ERROR_MESSAGE);
+        }
+        return lista;
     }
 }

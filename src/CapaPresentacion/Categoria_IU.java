@@ -1,24 +1,38 @@
 package CapaPresentacion;
 
-import CapaDatos.Marca;
-import CapaNegocio.MarcaBD;
+import CapaDatos.Categoria;
+import CapaNegocio.CategoriaBD;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class Marca_IU extends javax.swing.JInternalFrame {
+/**
+ *
+ * @author ANDER
+ */
+public class Categoria_IU extends javax.swing.JInternalFrame {
 
-    public Marca_IU() {
+    public Categoria_IU() {
         initComponents();
+        txtCatidad.setEnabled(false);
         txtCodigo.setEnabled(false);
-        txtCantidad.setEnabled(false);
-        reporte_marca();
+        reporteCategoria();
+    }
+
+    public void limpiar_tabla_formulario() {
+        DefaultTableModel tabla_temporal_categorias = (DefaultTableModel) tabla_reporte_categoria.getModel();
+        tabla_temporal_categorias.setRowCount(0);
     }
 
     private void limpiar() {
         txtCodigo.setText("");
-        txtNomre.setText("");
+        txtCatidad.setText("");
+        txtNombre.setText("");
+        reporteCategoria();
+
     }
 
     private void exito(String mensaje) {
@@ -33,15 +47,26 @@ public class Marca_IU extends javax.swing.JInternalFrame {
         JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void reporte_marca() {
-        try {
+    public void reporteCategoria() {
             setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
-            DefaultTableModel tabla_temporal;
-            MarcaBD o_MarcaBD = new MarcaBD();
-            tabla_temporal = o_MarcaBD.reportarMarca();
-            tabla_reporte_marca.setModel(tabla_temporal);
-            int cat = tabla_temporal.getRowCount();
-            txtCantidad.setText("" + cat);
+        try {
+            limpiar_tabla_formulario();
+
+            DefaultTableModel tabla_temporal = (DefaultTableModel) this.tabla_reporte_categoria.getModel();
+            CategoriaBD o_CategoriaBD = new CategoriaBD();
+
+            List<Categoria> lista_categorias = o_CategoriaBD.reportarCategoria();
+
+            for (int i = 0; i < lista_categorias.size(); i++) {
+                int idcategoria = lista_categorias.get(i).getIdCategoria();
+                String maNombre = lista_categorias.get(i).getCaNombre();
+                Object[] data = {idcategoria, maNombre};
+                tabla_temporal.addRow(data);
+                int canLista = tabla_temporal.getRowCount();
+                txtCatidad.setText("" + canLista);
+            }
+            tabla_reporte_categoria.setModel(tabla_temporal);
+
             setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         } catch (Exception e) {
             setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -55,15 +80,15 @@ public class Marca_IU extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtNomre = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtCantidad = new javax.swing.JTextField();
+        txtCatidad = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla_reporte_marca = new javax.swing.JTable();
+        tabla_reporte_categoria = new javax.swing.JTable();
         btnRegistrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -73,7 +98,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("LABORATORIO");
+        setTitle("MANTENIMIENTO DE CATEGORIAS");
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setText("CODIGO");
@@ -81,30 +106,39 @@ public class Marca_IU extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("NOMBRE");
 
-        txtNomre.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNomreFocusGained(evt);
+                txtNombreFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNomreFocusLost(evt);
+                txtNombreFocusLost(evt);
             }
         });
-        txtNomre.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNomreKeyPressed(evt);
+                txtNombreKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNomreKeyTyped(evt);
+                txtNombreKeyTyped(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setText("CANTIDAD");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Laboratorio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 14))); // NOI18N
+        txtCatidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCatidadActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("BUSCAR CATEGORIA"));
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel4.setText("LABORATORIO");
+        jLabel4.setText("CATEGORIA");
 
         txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -141,26 +175,26 @@ public class Marca_IU extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        tabla_reporte_marca.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_reporte_categoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-
+                "CODIGO", "NOMBRE"
             }
         ));
-        tabla_reporte_marca.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabla_reporte_categoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tabla_reporte_marcaMousePressed(evt);
+                tabla_reporte_categoriaMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tabla_reporte_marca);
+        jScrollPane1.setViewportView(tabla_reporte_categoria);
 
-        btnRegistrar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/report.png"))); // NOI18N
+        btnRegistrar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/book.png"))); // NOI18N
         btnRegistrar.setText("REGISTRAR");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +207,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             }
         });
 
-        btnModificar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        btnModificar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/book_edit.png"))); // NOI18N
         btnModificar.setText("MODIFICAR");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -182,7 +216,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        btnEliminar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/bin_empty.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -191,7 +225,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             }
         });
 
-        btnLimpiar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        btnLimpiar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/page.png"))); // NOI18N
         btnLimpiar.setText("LIMPIAR");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -200,7 +234,7 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCerrar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        btnCerrar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cross.png"))); // NOI18N
         btnCerrar.setText("CERRAR");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -217,6 +251,20 @@ public class Marca_IU extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCatidad, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombre))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRegistrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnModificar)
@@ -224,42 +272,32 @@ public class Marca_IU extends javax.swing.JInternalFrame {
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(btnCerrar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(btnCerrar)
+                        .addGap(0, 4, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtNomre))))
-                .addGap(17, 17, 17))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCatidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNomre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
@@ -273,53 +311,140 @@ public class Marca_IU extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtCatidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCatidadActionPerformed
+
+    }//GEN-LAST:event_txtCatidadActionPerformed
+
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            if (txtNomre.getText().length() > 0) {
-                if (txtCodigo.getText().length() == 0) {
-                    Marca o_Marca = new Marca();
-                    MarcaBD o_MarcaBD = new MarcaBD();
-                    o_Marca.setMaNombre(txtNomre.getText().toUpperCase().trim());
-                    boolean rpta = o_MarcaBD.registraMarca(o_Marca);
-                    if (rpta) {
-                        exito("se registro con ecxito");
-                        reporte_marca();
-                        limpiar();
-                        txtNomre.requestFocus();
+            if (txtCodigo.getText().length() == 0) {
+                if (txtNombre.getText().length() > 0) {
+                    Categoria o_Categoria = new Categoria();
+                    CategoriaBD o_caCategoriaBD = new CategoriaBD();
 
+                    o_Categoria.setCaNombre(txtNombre.getText().toUpperCase().trim());
+                    boolean rpta = o_caCategoriaBD.registrarCategoria(o_Categoria);
+                    if (rpta) {
+                        exito("Se registro correctamente");
+                        reporteCategoria();
+                        limpiar();
+                        txtNombre.requestFocus();
                     } else {
-                        error("Tienes problemas al registrar marca");
+                        error("Tienes problemas al registrar");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "No puedes registrar por que ya existe", "error", JOptionPane.INFORMATION_MESSAGE);
+                    advertencia("Ingrese nombre");
+                    txtNombre.requestFocus();
                 }
             } else {
-                error("Ingrese nombre");
-                txtNomre.requestFocus();
+                advertencia("No puedes registrar por que ya existe");
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al registrar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void txtNomreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNomreFocusGained
-        txtNomre.setBackground(Color.yellow);
-    }//GEN-LAST:event_txtNomreFocusGained
+    private void tabla_reporte_categoriaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_reporte_categoriaMousePressed
+        if (evt.getClickCount() == 2) {
+            int fila_seleccionada = tabla_reporte_categoria.getSelectedRow();
+            txtCodigo.setText(tabla_reporte_categoria.getValueAt(fila_seleccionada, 0).toString());
+            txtNombre.setText(tabla_reporte_categoria.getValueAt(fila_seleccionada, 1).toString());
+            txtNombre.requestFocus();
+        }
+    }//GEN-LAST:event_tabla_reporte_categoriaMousePressed
 
-    private void txtNomreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNomreFocusLost
-        txtNomre.setBackground(Color.white);
-    }//GEN-LAST:event_txtNomreFocusLost
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            if (txtCodigo.getText().length() > 0) {
+                if (txtNombre.getText().length() > 0) {
+                    Categoria o_Categoria = new Categoria();
+                    CategoriaBD o_caCategoriaBD = new CategoriaBD();
 
-    private void txtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusGained
-        txtBuscar.setBackground(Color.yellow);
-    }//GEN-LAST:event_txtBuscarFocusGained
+                    o_Categoria.setIdCategoria(Integer.parseInt(txtCodigo.getText().toUpperCase().trim()));
+                    o_Categoria.setCaNombre(txtNombre.getText().toUpperCase().trim());
 
-    private void txtBuscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusLost
-        txtBuscar.setBackground(Color.white);
-    }//GEN-LAST:event_txtBuscarFocusLost
+                    boolean rpta = o_caCategoriaBD.ModificarCategoria(o_Categoria);
+                    if (rpta) {
+                        exito("Se modifico correctamente");
+                        reporteCategoria();
+                        limpiar();
+                        txtNombre.requestFocus();
+                    } else {
+                        error("Tienes problemas al registrar");
+                    }
+                } else {
+                    advertencia("Ingrese nombre");
+                    txtNombre.requestFocus();
+                }
+            } else {
+                advertencia("No puedes registrar por que ya existe");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al modificar", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            if (txtCodigo.getText().length() > 0) {
+                int aviso = JOptionPane.showConfirmDialog(rootPane, "Estas seguro de eliminar ?");
+                if (aviso == 0) {
+                    int idcategoria = Integer.parseInt(txtCodigo.getText().trim());
+                    Categoria o_Categoria = new Categoria();
+                    CategoriaBD o_CategoriaBD = new CategoriaBD();
+                    o_Categoria.setIdCategoria(idcategoria);
+                    boolean rpta = o_CategoriaBD.eliminarCategoria(idcategoria);
+                    if (rpta) {
+                        exito("Se elimino con exito");
+                        reporteCategoria();
+                        limpiar();
+                        txtNombre.requestFocus();
+                    } else {
+                        error("Tienes problemas para eliminar");
+                    }
+
+                }
+            } else {
+                advertencia("Ingrese un codigo para eliminar");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al eliminar", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        try {
+            limpiar_tabla_formulario();
+            DefaultTableModel tabla_temporal = (DefaultTableModel) this.tabla_reporte_categoria.getModel();
+            CategoriaBD oCategoriaBD = new CategoriaBD();
+            String valor = txtBuscar.getText().trim();
+            List<Categoria> lista_categoria = oCategoriaBD.buscarCategoria(valor);
+
+            for (int i = 0; i < lista_categoria.size(); i++) {
+                int idcategoria = lista_categoria.get(i).getIdCategoria();
+                String maNombre = lista_categoria.get(i).getCaNombre();
+                Object[] data = {idcategoria, maNombre};
+                tabla_temporal.addRow(data);
+            }
+            tabla_reporte_categoria.setModel(tabla_temporal);
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        } catch (Exception e) {
+            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusGained
+        txtNombre.setBackground(Color.yellow);
+    }//GEN-LAST:event_txtNombreFocusGained
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+        txtNombre.setBackground(Color.white);
+    }//GEN-LAST:event_txtNombreFocusLost
 
     private void btnRegistrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnRegistrarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -327,111 +452,26 @@ public class Marca_IU extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnRegistrarKeyPressed
 
-    private void txtNomreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomreKeyPressed
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnRegistrar.requestFocus();
         }
-    }//GEN-LAST:event_txtNomreKeyPressed
-
-    private void tabla_reporte_marcaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_reporte_marcaMousePressed
-        if (evt.getClickCount() == 2) {
-            int fila_seleccionada = tabla_reporte_marca.getSelectedRow();
-
-            txtCodigo.setText(tabla_reporte_marca.getValueAt(fila_seleccionada, 0).toString());
-            txtNomre.setText(tabla_reporte_marca.getValueAt(fila_seleccionada, 1).toString());
-            txtNomre.requestFocus();
-        }
-    }//GEN-LAST:event_tabla_reporte_marcaMousePressed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try {
-            if (txtCodigo.getText().length() > 0) {
-                if (txtNomre.getText().length() > 0) {
-                    Marca o_Marca = new Marca();
-                    MarcaBD o_MarcaBD = new MarcaBD();
-                    o_Marca.setIdmarca(Integer.parseInt(txtCodigo.getText().trim()));
-                    o_Marca.setMaNombre(txtNomre.getText().toUpperCase().trim());
-
-                    boolean rpta = o_MarcaBD.modificarMarca(o_Marca);
-                    if (rpta) {
-                        exito("Se modifico con ecxito");
-                        reporte_marca();
-                        limpiar();
-                        txtNomre.requestFocus();
-                    } else {
-                        error("Tienes problemas para modificar");
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "El campo no puede estar vacio");
-                    txtNomre.requestFocus();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe el codigo a modicar");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error al modifcar", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try {
-            if (txtCodigo.getText().length() > 0) {
-                int aviso = JOptionPane.showConfirmDialog(rootPane, "Estas seguro de eliminar");
-                if (aviso == 0) {
-                    int idmarca = Integer.parseInt(txtCodigo.getText().trim());
-                    MarcaBD o_MarcaBD = new MarcaBD();
-                    boolean rpta = o_MarcaBD.eliminarMarca(idmarca);
-                    if (rpta) {
-                        exito("Se elimino con ecxito");
-                        reporte_marca();
-                        limpiar();
-                        txtNomre.requestFocus();
-
-                    } else {
-                        error("Tienes problemas para eliminar");
-                    }
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese un codigo");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error al eliminar marca", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
-        try {
-            setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
-            DefaultTableModel tabla_temporal;
-            String valor = txtBuscar.getText();
-            MarcaBD oMarcaBD = new MarcaBD();
-            tabla_temporal = oMarcaBD.buscarMarca(valor);
-            tabla_reporte_marca.setModel(tabla_temporal);
-            int cantLista = tabla_temporal.getRowCount();
-            txtCantidad.setText("" + cantLista);
-            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-            txtBuscar.requestFocus();
-        } catch (Exception e) {
-            setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_txtBuscarKeyPressed
+    }//GEN-LAST:event_txtNombreKeyPressed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtNombre.setText("");
+        txtBuscar.setText("");
         txtCodigo.setText("");
-        txtNomre.setText("");
-        txtNomre.requestFocus();
+        txtNombre.requestFocus();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void txtNomreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomreKeyTyped
-        char validar = evt.getKeyChar();
-        if (Character.isDigit(validar)) {
-            getToolkit().beep();
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtNomreKeyTyped
+    private void txtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusGained
+        txtBuscar.setBackground(Color.yellow);
+    }//GEN-LAST:event_txtBuscarFocusGained
+
+    private void txtBuscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusLost
+       txtBuscar.setBackground(Color.white);
+    }//GEN-LAST:event_txtBuscarFocusLost
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
         char validar = evt.getKeyChar();
@@ -440,6 +480,18 @@ public class Marca_IU extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char validar = evt.getKeyChar();
+        if (Character.isDigit(validar)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -454,10 +506,10 @@ public class Marca_IU extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabla_reporte_marca;
+    private javax.swing.JTable tabla_reporte_categoria;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtCatidad;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtNomre;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

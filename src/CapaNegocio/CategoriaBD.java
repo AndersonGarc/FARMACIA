@@ -43,7 +43,7 @@ public class CategoriaBD {
 
     public boolean registrarCategoria(Categoria m) {
         boolean rpta = false;
-        sql = "";
+        sql = "insert into categoria(idCategoria,caNombre)values(null,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, m.getCaNombre());
@@ -58,20 +58,20 @@ public class CategoriaBD {
 
     public boolean ModificarCategoria(Categoria m) {
         boolean rpta = false;
-        sql = "";
+        sql = "update categoria set caNombre=? where idCategoria=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, m.getCaNombre());
-            pst.setInt(2,m.getIdCategoria());
+            pst.setInt(2, m.getIdCategoria());
 
             rpta = pst.executeUpdate() == 1 ? true : false;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error al registrar categoria", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Error al modificar categoria", JOptionPane.ERROR_MESSAGE);
             return rpta;
         }
         return rpta;
     }
-    
+
     public boolean eliminarCategoria(int idCategoria) {
         boolean rpta = false;
         sql = "delete from categoria where idCategoria=?";
@@ -87,4 +87,28 @@ public class CategoriaBD {
         }
         return rpta;
     }
+
+    public List<Categoria> buscarCategoria(String valor) {
+        List<Categoria> lista = new ArrayList<>();
+        sql = "select idCategoria,caNombre from categoria where caNombre like ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, "%" + valor + "%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Categoria o_Categoria = new Categoria();
+
+                o_Categoria.setIdCategoria(rs.getInt(1));
+                o_Categoria.setCaNombre(rs.getString(2));
+
+                lista.add(o_Categoria);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al buscar la categoria BD", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        return lista;
+    }
+
 }

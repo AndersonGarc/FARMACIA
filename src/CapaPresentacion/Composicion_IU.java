@@ -41,7 +41,7 @@ public class Composicion_IU extends javax.swing.JInternalFrame {
 
     private void limpiar_tabla_formulario() {
         DefaultTableModel tabla_temporal_composicio = (DefaultTableModel) tabla_reporte_composicion.getModel();
-        tabla_temporal_composicio.getRowCount();
+        tabla_temporal_composicio.setRowCount(0);
     }
 
     private void reportar() {
@@ -53,10 +53,10 @@ public class Composicion_IU extends javax.swing.JInternalFrame {
             int cant = lista_composiciones.size();
             for (int i = 0; i < cant; i++) {
                 int idcomposiciones = lista_composiciones.get(i).getIdcomposicion();
-                String nombre = lista_composiciones.get(i).getCoNombre();
-                String serie = lista_composiciones.get(i).getpSerie();
+                String nombre_composicion = lista_composiciones.get(i).getCoNombre();
+                String serie_composicion = lista_composiciones.get(i).getpSerie();
 
-                Object[] data = {idcomposiciones, nombre, serie};
+                Object[] data = {idcomposiciones, nombre_composicion, serie_composicion};
                 tabla_temporal_composicio.addRow(data);
 
             }
@@ -174,7 +174,15 @@ public class Composicion_IU extends javax.swing.JInternalFrame {
             new String [] {
                 "CODIGO", "COMPOSICION", "SERIE"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabla_reporte_composicion);
 
         btncerrar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -311,30 +319,27 @@ public class Composicion_IU extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btncerrarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try {
-            int fila_seleccionada = tabla_reporte_composicion.getSelectedRow();
-            if (fila_seleccionada > -1) {
-                int aviso = JOptionPane.showConfirmDialog(rootPane, "EStas seguro de eliminar..?,", "CONFIRMACION", JOptionPane.YES_NO_OPTION);
-                if (aviso == 0) {
-                    int idcomposicion = Integer.parseInt(tabla_reporte_composicion.getValueAt(fila_seleccionada, 0).toString());
-                    ComposicionBD oComposicionBD = new ComposicionBD();
-                    boolean rpta = oComposicionBD.eliminarComposicion(idcomposicion);
-                    if (rpta) {
-                        exito("buena");
-                        reportar();
-                        limpiar();
-                        txtSerie.requestFocus();
-                    } else {
-                        error("Tienes problemas para eliminar");
-                    }
-
-                } else {
+        int fila_seleccionada = tabla_reporte_composicion.getSelectedRow();
+        if (fila_seleccionada > -1) {
+            int aviso = JOptionPane.showConfirmDialog(rootPane, "EStas seguro de eliminar..?,", "CONFIRMACION", JOptionPane.YES_NO_OPTION);
+            if (aviso == 0) {
+                int idcomposicion = Integer.parseInt(tabla_reporte_composicion.getValueAt(fila_seleccionada, 0).toString());
+                ComposicionBD oComposicionBD = new ComposicionBD();
+                boolean rpta = oComposicionBD.eliminarComposicion(idcomposicion);
+                if (rpta) {
+                    exito("se elimino");
+                    reportar();
+                    limpiar();
                     txtSerie.requestFocus();
+                } else {
+                    error("Tienes problemas para eliminar");
                 }
+
+            } else {
+                txtSerie.requestFocus();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtSerieFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSerieFocusGained

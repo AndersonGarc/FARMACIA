@@ -26,6 +26,7 @@ public class CategoriaBD {
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
+            
             while (rs.next()) {
                 Categoria o_Categoria = new Categoria();
 

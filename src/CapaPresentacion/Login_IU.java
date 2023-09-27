@@ -251,7 +251,7 @@ public class Login_IU extends javax.swing.JFrame {
                             o_Menu_IU.btnCaja.setEnabled(true);
                             o_Menu_IU.btnVentas.setEnabled(true);
                             o_Menu_IU.btnCerrar.setEnabled(true);
-//                            o_Menu_IU.btnEgresos.setEnabled(true);
+                            o_Menu_IU.btnEgresos.setEnabled(true);
 
                             List<Asistencia> lista = o_AsistenciaBD.buscarAsistenciaUsuario(dni, tienda, fecha);
                             if (lista.size() > 0) {
@@ -284,6 +284,7 @@ public class Login_IU extends javax.swing.JFrame {
                     }
                 } else {
                     error("No perteneces al sistema");
+                    txtDni.requestFocus();
                 }
 
             } else {

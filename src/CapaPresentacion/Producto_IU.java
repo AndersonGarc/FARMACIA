@@ -23,11 +23,11 @@ import javax.swing.table.DefaultTableModel;
  * @author ANDER
  */
 public class Producto_IU extends javax.swing.JInternalFrame {
-    
+
     List<Categoria> lista_categoria;
     List<Marca> lista_marca;
     List<Medida> lista_medida;
-    
+
     public Producto_IU() {
         initComponents();
         cargar_categoria();
@@ -40,26 +40,26 @@ public class Producto_IU extends javax.swing.JInternalFrame {
         reportar();
         desabilitar_botones();
     }
-    
+
     private void desabilitar_botones() {
         btnRegistrar.setEnabled(false);
         btnModificar.setEnabled(false);
         btnBuscar.setEnabled(false);
         btnEliminar.setEnabled(false);
     }
-    
+
     private void habilitar_botones() {
         btnRegistrar.setEnabled(true);
         btnModificar.setEnabled(true);
         btnBuscar.setEnabled(true);
         btnEliminar.setEnabled(true);
     }
-    
+
     public void limpiar() {
         cmbCategoria.setSelectedIndex(0);
         cmbMedida.setSelectedIndex(0);
         cmbLaboratorio.setSelectedIndex(0);
-        
+
         txtSerie.setText("");
         txtDescripcion.setText("");
         txtObservacion.setText("");
@@ -68,80 +68,80 @@ public class Producto_IU extends javax.swing.JInternalFrame {
         txtMarca.setText("");
         txtMedida.setText("");
     }
-    
+
     private void cargar_categoria() {
         try {
             cmbCategoria.removeAllItems();
             CategoriaBD o_CategoriaBD = new CategoriaBD();
             lista_categoria = o_CategoriaBD.reportarCategoria();
-            
+
             cmbCategoria.addItem("Seleccionar");
             for (int i = 0; i < lista_categoria.size(); i++) {
-                
+
                 String nombre = lista_categoria.get(i).getCaNombre();
-                
+
                 cmbCategoria.addItem(nombre);
-                
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "error al cargar la categoria", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void limpiar_tabla_formulario() {
         DefaultTableModel tabla_temporal_productos = (DefaultTableModel) tabla_reporte_producto.getModel();
         tabla_temporal_productos.setRowCount(0);
     }
-    
+
     private void cargar_marca() {
         try {
             cmbLaboratorio.removeAllItems();
             MarcaBD o_MarcaBD = new MarcaBD();
             DefaultTableModel tabla_temporal;
             tabla_temporal = o_MarcaBD.reportarMarca();
-            
+
             lista_marca = new ArrayList<>();
-            
+
             cmbLaboratorio.addItem("Seleccionar");
             for (int i = 0; i < tabla_temporal.getRowCount(); i++) {
-                
+
                 int codigo = Integer.valueOf(tabla_temporal.getValueAt(i, 0).toString());
                 String nombre = String.valueOf(tabla_temporal.getValueAt(i, 1));
-                
+
                 lista_marca.add(new Marca(codigo, nombre));
                 cmbLaboratorio.addItem(nombre);
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "error al cargar la marca", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void cargar_medida() {
         try {
             cmbMedida.removeAllItems();
             MedidaBD o_MarcaBD = new MedidaBD();
             DefaultTableModel tabla_temporal;
             tabla_temporal = o_MarcaBD.reportarMedida();
-            
+
             lista_medida = new ArrayList<>();
-            
+
             cmbMedida.addItem("Seleccionar");
             for (int i = 0; i < tabla_temporal.getRowCount(); i++) {
-                
+
                 int codigo = Integer.valueOf(tabla_temporal.getValueAt(i, 0).toString());
                 String presentacion = String.valueOf(tabla_temporal.getValueAt(i, 1));
                 String equivalencia = String.valueOf(tabla_temporal.getValueAt(i, 2));
-                
+
                 lista_medida.add(new Medida(codigo, presentacion, equivalencia));
                 cmbMedida.addItem(presentacion);
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "error al cargar la medida", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     public void reportar() {
         try {
             setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
@@ -161,7 +161,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                 String categoria = tabla_temporal.getValueAt(i, 5).toString();
                 String marca = tabla_temporal.getValueAt(i, 6).toString();
                 String medida = tabla_temporal.getValueAt(i, 7).toString();
-                
+
                 Object[] data = {serie, descripcion, observacion, digemi, condicion, categoria, marca, medida};
                 tabla_temporal_productos.addRow(data);
             }
@@ -172,19 +172,19 @@ public class Producto_IU extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }
-    
+
     private void exito(String mensaje) {
         JOptionPane.showConfirmDialog(this, mensaje, "MENSAJE", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     private void error(String mensaje) {
         JOptionPane.showConfirmDialog(this, mensaje, "ERROR", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
     }
-    
+
     private void advertencia(String mensaje) {
         JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -662,7 +662,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
         try {
             if (evt.getStateChange() == ItemEvent.SELECTED) {
                 String textoSeleccionado = (String) cmbCategoria.getSelectedItem();
-                
+
                 if (textoSeleccionado.equals("Seleccionar")) {
                     txtCategoria.setText("");
                 } else {
@@ -678,7 +678,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
     private void cmbLaboratorioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbLaboratorioItemStateChanged
         try {
             if (evt.getStateChange() == ItemEvent.SELECTED) {
-                
+
                 String texto_Seleccionado = (String) cmbLaboratorio.getSelectedItem();
                 if (texto_Seleccionado.equals("Seleccionar")) {
                     txtMarca.setText("");
@@ -695,7 +695,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
     private void cmbMedidaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMedidaItemStateChanged
         try {
             if (evt.getStateChange() == ItemEvent.SELECTED) {
-                
+
                 String texto_Seleccionado = (String) cmbMedida.getSelectedItem();
                 if (texto_Seleccionado.equals("Seleccionar")) {
                     txtMedida.setText("");
@@ -726,7 +726,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                                 o_Producto.setIdCategoria(Integer.parseInt(txtCategoria.getText()));
                                 o_Producto.setIdmarca(Integer.parseInt(txtMarca.getText()));
                                 o_Producto.setIdmedida(Integer.parseInt(txtMedida.getText()));
-                                
+
                                 boolean rpta = o_ProductoBD.registrarProducto(o_Producto);
                                 if (rpta) {
                                     exito("Se registro con exito");
@@ -737,7 +737,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                                 } else {
                                     error("Tienes problemas");
                                 }
-                                
+
                             } else {
                                 advertencia("Ingese una medida");
                             }
@@ -821,7 +821,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                 int cantidad_productos_encontrados = tabla_temporal.getRowCount();
                 txtCantidad.setText("" + cantidad_productos_encontrados);
                 limpiar_tabla_formulario();
-                
+
                 if (cantidad_productos_encontrados > 0) {
                     txtDescripcion.setText(tabla_temporal.getValueAt(0, 1).toString());
                     txtObservacion.setText(tabla_temporal.getValueAt(0, 2).toString());
@@ -833,9 +833,9 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                     txtMedida.setText(tabla_temporal.getValueAt(0, 10).toString());
                     txtCategoria.setText(tabla_temporal.getValueAt(0, 8).toString());
                     txtMarca.setText(tabla_temporal.getValueAt(0, 9).toString());
-                    
+
                     DefaultTableModel tabla_temporal_producto = (DefaultTableModel) this.tabla_reporte_producto.getModel();
-                    
+
                     for (int i = 0; i < cantidad_productos_encontrados; i++) {
                         serie = tabla_temporal.getValueAt(i, 0).toString();
                         String descripcion = tabla_temporal.getValueAt(i, 1).toString();
@@ -845,17 +845,16 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                         String categoria = tabla_temporal.getValueAt(i, 5).toString();
                         String marca = tabla_temporal.getValueAt(i, 6).toString();
                         String medida = tabla_temporal.getValueAt(i, 7).toString();
-                        
+
                         Object[] data = {serie, descripcion, observacion, digemi, condicion, categoria, marca, medida};
                         tabla_temporal_producto.addRow(data);
                         txtSerie.requestFocus();
-                        
                     }
                     tabla_reporte_producto.setModel(tabla_temporal_producto);
                 } else {
                     error("no se encontraron los productos");
                 }
-                
+
             } else {
             }
         } catch (Exception e) {
@@ -873,7 +872,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                             if (txtMedida.getText().length() > 0) {
                                 Producto o_Producto = new Producto();
                                 ProductoBD o_ProductoBD = new ProductoBD();
-                                
+
                                 o_Producto.setpSerie(txtSerie.getText().trim());
                                 o_Producto.setpDescripcion(txtDescripcion.getText().toUpperCase().trim());
                                 o_Producto.setpObservacion(txtObservacion.getText().toUpperCase());
@@ -882,7 +881,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                                 o_Producto.setIdCategoria(Integer.parseInt(txtCategoria.getText()));
                                 o_Producto.setIdmarca(Integer.parseInt(txtMarca.getText()));
                                 o_Producto.setIdmedida(Integer.parseInt(txtMedida.getText()));
-                                
+
                                 boolean rpta = o_ProductoBD.modificarProducto(o_Producto);
                                 if (rpta) {
                                     exito("Se modifico con exito");
@@ -893,7 +892,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                                 } else {
                                     error("Tienes problemas");
                                 }
-                                
+
                             } else {
                                 advertencia("Ingese una medida");
                             }
@@ -920,7 +919,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
         try {
             if (txtSerie.getText().length() > 0) {
                 String serie = txtSerie.getText();
-                int avsio = JOptionPane.showConfirmDialog(rootPane, "estas seguro de eliminar","CONFIRMACION",JOptionPane.YES_NO_OPTION);
+                int avsio = JOptionPane.showConfirmDialog(rootPane, "estas seguro de eliminar", "CONFIRMACION", JOptionPane.YES_NO_OPTION);
                 if (avsio == 0) {
                     ProductoBD o_ProductoBD = new ProductoBD();
                     boolean rpta = o_ProductoBD.eliminarProducto(serie);
@@ -933,11 +932,11 @@ public class Producto_IU extends javax.swing.JInternalFrame {
                     } else {
                         error("Tienes problemas");
                     }
-                    
+
                 } else {
                     txtSerie.requestFocus();
                 }
-                
+
             } else {
                 error("falta el codigo del producto");
                 txtSerie.requestFocus();
@@ -955,7 +954,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
         ProductoBD o_ProductoBD = new ProductoBD();
         tabla_temporal = o_ProductoBD.buscarProductoDescripcion(descripcion);
         int cant = tabla_temporal.getRowCount();
-        
+
         for (int i = 0; i < cant; i++) {
             String serie = tabla_temporal.getValueAt(i, 0).toString();
             descripcion = tabla_temporal.getValueAt(i, 1).toString();
@@ -965,7 +964,7 @@ public class Producto_IU extends javax.swing.JInternalFrame {
             String categoria = tabla_temporal.getValueAt(i, 5).toString();
             String marca = tabla_temporal.getValueAt(i, 6).toString();
             String medida = tabla_temporal.getValueAt(i, 7).toString();
-            
+
             Object[] data = {serie, descripcion, observacion, digemi, condicion, categoria, marca, medida};
             tabla_temporal_producto.addRow(data);
         }
@@ -1007,11 +1006,11 @@ public class Producto_IU extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
-            char validar = evt.getKeyChar();
-            if (Character.isDigit(validar)) {
-                getToolkit().beep();
-                evt.consume();
-            }
+        char validar = evt.getKeyChar();
+        if (Character.isDigit(validar)) {
+            getToolkit().beep();
+            evt.consume();
+        }
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
     private void txtSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyPressed
@@ -1021,13 +1020,13 @@ public class Producto_IU extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSerieKeyPressed
 
     private void txtDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyPressed
-       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cmbCategoria.requestFocus();
         }
     }//GEN-LAST:event_txtDescripcionKeyPressed
 
     private void cmbCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbCategoriaKeyPressed
-       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cmbCondicion.requestFocus();
         }
     }//GEN-LAST:event_cmbCategoriaKeyPressed

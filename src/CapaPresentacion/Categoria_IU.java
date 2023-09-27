@@ -4,7 +4,6 @@ import CapaDatos.Categoria;
 import CapaNegocio.CategoriaBD;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,12 +16,13 @@ public class Categoria_IU extends javax.swing.JInternalFrame {
 
     public Categoria_IU() {
         initComponents();
+        reporteCategoria();
         txtCatidad.setEnabled(false);
         txtCodigo.setEnabled(false);
-        reporteCategoria();
+        
     }
 
-    public void limpiar_tabla_formulario() {
+    private void limpiar_tabla_formulario() {
         DefaultTableModel tabla_temporal_categorias = (DefaultTableModel) tabla_reporte_categoria.getModel();
         tabla_temporal_categorias.setRowCount(0);
     }
@@ -361,6 +361,7 @@ public class Categoria_IU extends javax.swing.JInternalFrame {
         try {
             if (txtCodigo.getText().length() > 0) {
                 if (txtNombre.getText().length() > 0) {
+                    
                     Categoria o_Categoria = new Categoria();
                     CategoriaBD o_caCategoriaBD = new CategoriaBD();
 

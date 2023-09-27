@@ -1,6 +1,5 @@
 package CapaPresentacion;
 
-
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 
@@ -9,19 +8,19 @@ public class Menu_IU extends javax.swing.JFrame {
     public Menu_IU() {
         initComponents();
         JOptionPane.showMessageDialog(null, "BIENVENIDO PAPU");
-//        menu_mantenimiento.setEnabled(false);
-//        menu_compras.setEnabled(false);
-//        menu_inventario.setEnabled(false);
-//        btnProductos.setEnabled(false);
-//        btnCompras.setEnabled(false);
-//        btnCerrar.setEnabled(false);
-//        btnUsuario.se tEnabled(false);
-//        menu_ventas.setEnabled(false);
-//        menu_caja.setEnabled(false);
-//        btnIngresos.setEnabled(false);
-//        btnVentas.setEnabled(false);
-//        btnCaja.setEnabled(false);
-//        btnEgresos.setEnabled(false);
+        menu_mantenimiento.setEnabled(false);
+        menu_compras.setEnabled(false);
+        menu_inventario.setEnabled(false);
+        btnProductos.setEnabled(false);
+        btnCompras.setEnabled(false);
+        btnCerrar.setEnabled(false);
+        btnUsuario.setEnabled(false);
+        menu_ventas.setEnabled(false);
+        menu_caja.setEnabled(false);
+        btnIngresos.setEnabled(false);
+        btnVentas.setEnabled(false);
+        btnCaja.setEnabled(false);
+        btnEgresos.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +33,7 @@ public class Menu_IU extends javax.swing.JFrame {
         btnProductos = new javax.swing.JButton();
         btnCompras = new javax.swing.JButton();
         btnIngresos = new javax.swing.JButton();
+        btnEgresos = new javax.swing.JButton();
         btnCaja = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
@@ -92,6 +92,12 @@ public class Menu_IU extends javax.swing.JFrame {
         btnIngresos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(btnIngresos);
 
+        btnEgresos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/reporte ventas.png"))); // NOI18N
+        btnEgresos.setFocusable(false);
+        btnEgresos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEgresos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnEgresos);
+
         btnCaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/compras.png"))); // NOI18N
         btnCaja.setFocusable(false);
         btnCaja.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -121,7 +127,7 @@ public class Menu_IU extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,6 +332,7 @@ public class Menu_IU extends javax.swing.JFrame {
     public javax.swing.JButton btnCaja;
     public javax.swing.JButton btnCerrar;
     public javax.swing.JButton btnCompras;
+    public javax.swing.JButton btnEgresos;
     public javax.swing.JButton btnIngresos;
     public javax.swing.JButton btnProductos;
     public javax.swing.JButton btnUsuario;

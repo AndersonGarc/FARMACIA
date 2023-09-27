@@ -6,7 +6,6 @@
 package CapaNegocio;
 
 import CapaConexion.Conexion;
-import CapaDatos.Categoria;
 import CapaDatos.Composicion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,14 +30,15 @@ public class ComposicionBD {
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
+                        
             while (rs.next()) {
-                Composicion o_Categoria = new Composicion();
+                Composicion o_Composicion = new Composicion();
 
-                o_Categoria.setIdcomposicion(rs.getInt(1));
-                o_Categoria.setCoNombre(rs.getString(2));
-                o_Categoria.setpSerie(rs.getString(3));
+                o_Composicion.setIdcomposicion(rs.getInt(1));
+                o_Composicion.setCoNombre(rs.getString(2));
+                o_Composicion.setpSerie(rs.getString(3));
 
-                lista.add(o_Categoria);
+                lista.add(o_Composicion);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error al reportar composicion", JOptionPane.ERROR_MESSAGE);
@@ -69,7 +69,7 @@ public class ComposicionBD {
         boolean rpta = false;
         sql = "delete from composicion where idcomposicion=?";
         try {
-            PreparedStatement pst = cn.prepareStatement(sql);
+            PreparedStatement pst =cn.prepareStatement(sql);
             pst.setInt(1, idcomposicion);
             rpta = pst.executeUpdate() == 1 ? true : false;
 

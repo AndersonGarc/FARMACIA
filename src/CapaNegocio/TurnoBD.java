@@ -43,38 +43,6 @@ public class TurnoBD {
             return null;
         }
         return modelo;
-
-    }
-
-    public DefaultTableModel buscarUsuarioXdni(String dni) {
-        DefaultTableModel tabla_temporal;
-        String[] titulos = {"DNI", "NOMBRE", "APELLIDOS", "DIRECCION", "CLAVE", "CELULAR", "TIPO_USUARIO", "TIENDA"};
-        String[] registros = new String[8];
-        tabla_temporal = new DefaultTableModel(null, titulos);
-        sql = "";
-        try {
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, dni);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                registros[0] = rs.getString("uDni");
-                registros[1] = rs.getString("uNombre");
-                registros[2] = rs.getString("uApellidos");
-                registros[3] = rs.getString("uDireccion");
-                registros[4] = rs.getString("uClave");
-                registros[5] = rs.getString("uCelular");
-                registros[6] = rs.getString("tuNombre");
-                registros[7] = rs.getString("tienda");
-                tabla_temporal.addRow(registros);
-
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error al buscar Turno BD", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-        return tabla_temporal;
-
     }
 
     public boolean registrarTurno(Turno t) {

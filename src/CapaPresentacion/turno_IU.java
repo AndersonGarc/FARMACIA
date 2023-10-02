@@ -112,8 +112,10 @@ public class turno_IU extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("TURNO");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de Usuario"));
+        jPanel1.setToolTipText("Datos de Usuario");
 
         jLabel1.setText("DNI");
 
@@ -222,7 +224,7 @@ public class turno_IU extends javax.swing.JInternalFrame {
 
         jLabel5.setText("TURNO");
 
-        cmbTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "turno 1" }));
+        cmbTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TURNO 1", "TURNO 2" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -333,7 +335,7 @@ public class turno_IU extends javax.swing.JInternalFrame {
                     .addComponent(btnRegistrar)
                     .addComponent(btnEliminar)
                     .addComponent(jButton6))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -372,8 +374,9 @@ public class turno_IU extends javax.swing.JInternalFrame {
                     String nombre = tabla_temporal.getValueAt(0, 1).toString();
                     String apellidos = tabla_temporal.getValueAt(0, 2).toString();
                     txtUsuario.setText(apellidos + " " + nombre);
+                    txtHoraI.requestFocus();
                 } else {
-                    advertencia("no ecxiste este usuario");
+                    advertencia("no existe este usuario");
                     txtdni.setText("");
                     txtdni.requestFocus();
                 }

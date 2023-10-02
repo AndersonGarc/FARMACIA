@@ -47,7 +47,7 @@ public class Categoria_IU extends javax.swing.JInternalFrame {
         JOptionPane.showConfirmDialog(this, mensaje, "ADVERTENCIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void reporteCategoria() {
+    private void reporteCategoria() {
             setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
         try {
             limpiar_tabla_formulario();

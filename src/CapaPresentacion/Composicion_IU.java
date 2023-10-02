@@ -386,11 +386,7 @@ public class Composicion_IU extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSerieKeyPressed
 
     private void txtComposicionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtComposicionKeyTyped
-        char validar = evt.getKeyChar();
-        if (Character.isDigit(validar)) {
-            getToolkit().beep();
-            evt.consume();
-        }
+
     }//GEN-LAST:event_txtComposicionKeyTyped
 
     private void txtComposicionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtComposicionKeyPressed

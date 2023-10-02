@@ -27,7 +27,7 @@ public class ProductoBD {
         sql = "select pSerie,pDescripcion,pObservacion,digemi,pCondicion,caNombre,maNombre,mPresentacion,c.idCategoria,m.idmarca,me.idmedida from producto as p\n"
                 + "inner join marca as m on p.idmarca=m.idmarca "
                 + "inner join medida as me on p.idmedida=me.idmedida "
-                + "inner join categoria as c on p.idCategoria=c.idCategoria limit 0,20";
+                + "inner join categoria as c on p.idCategoria=c.idCategoria limit 0,100";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
@@ -184,7 +184,7 @@ public class ProductoBD {
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error al buscar producto", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Error al buscar producto por descripcion", JOptionPane.ERROR_MESSAGE);
             return null;
         }
         return tabla_temporal;

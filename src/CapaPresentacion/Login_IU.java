@@ -30,7 +30,7 @@ public class Login_IU extends javax.swing.JFrame {
     public Login_IU() {
         initComponents();
         setLocationRelativeTo(null);
-        muestraimagen(lblFoto, "src/IMAGENES/mochi mochi.jpg");
+        muestraimagen(lblFoto, "src/IMAGENES/doc.jpg");
     }
 
     private String obtener_fecha_actual() {

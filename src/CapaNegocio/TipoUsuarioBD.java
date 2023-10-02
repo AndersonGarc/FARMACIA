@@ -68,11 +68,11 @@ public class TipoUsuarioBD {
         return true;
     }
 
-    public boolean eliminarTipoUsuario(TipoUsuario tp) {
+    public boolean eliminarTipoUsuario(TipoUsuario tu) {
         sql = "delete from tipousuario where idtipoUsuario=?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setInt(1, tp.getIdtipoUsuario());
+            pst.setInt(1, tu.getIdtipoUsuario());
 
             pst.executeUpdate();
 

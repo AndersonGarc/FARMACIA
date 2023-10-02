@@ -93,6 +93,14 @@ public class Medida_IU extends javax.swing.JInternalFrame {
 
             }
         ));
+        tabla_reporte_medida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tabla_reporte_medidaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabla_reporte_medidaMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla_reporte_medida);
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -177,6 +185,11 @@ public class Medida_IU extends javax.swing.JInternalFrame {
         btnCerrar.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/cross.png"))); // NOI18N
         btnCerrar.setText("CERRAR");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -326,6 +339,7 @@ public class Medida_IU extends javax.swing.JInternalFrame {
                         exito("se elimino");
                         reporte_medida();
                         limpiar();
+                        txtPresentacion.requestFocus();
                     } else {
                         error("hubo problemas");
                     }
@@ -390,6 +404,25 @@ public class Medida_IU extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtEquivalenciaKeyTyped
+
+    private void tabla_reporte_medidaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_reporte_medidaMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabla_reporte_medidaMouseExited
+
+    private void tabla_reporte_medidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_reporte_medidaMousePressed
+        if (evt.getClickCount() == 2) {
+            int fila_seleccionada = tabla_reporte_medida.getSelectedRow();
+
+            txtCodigo.setText(tabla_reporte_medida.getValueAt(fila_seleccionada, 0).toString());
+            txtPresentacion.setText(tabla_reporte_medida.getValueAt(fila_seleccionada, 1).toString());
+            txtEquivalencia.setText(tabla_reporte_medida.getValueAt(fila_seleccionada, 1).toString());
+           txtPresentacion.requestFocus();
+        }
+    }//GEN-LAST:event_tabla_reporte_medidaMousePressed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

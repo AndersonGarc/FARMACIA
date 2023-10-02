@@ -1,11 +1,12 @@
 package CapaDatos;
 
 public class Turno {
-   private int idturno;
-   private String descripcion;
-   private String inicio;
-   private String fin;
-   private String u_uDni;
+
+    private int idturno;
+    private String descripcion;
+    private String inicio;
+    private String fin;
+    private String u_uDni;
 
     public Turno() {
     }
@@ -57,6 +58,5 @@ public class Turno {
     public void setU_uDni(String u_uDni) {
         this.u_uDni = u_uDni;
     }
-   
-   
+
 }

@@ -45,7 +45,11 @@ public class Menu_IU extends javax.swing.JFrame {
         menu_item_categoria = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        menu_item_cuentas_bancarias = new javax.swing.JMenuItem();
         menu_compras = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         menu_inventario = new javax.swing.JMenu();
         menu_ventas = new javax.swing.JMenu();
         menu_caja = new javax.swing.JMenu();
@@ -186,9 +190,42 @@ public class Menu_IU extends javax.swing.JFrame {
         });
         menu_mantenimiento.add(jMenuItem3);
 
+        jMenuItem2.setText("PROVEEDOR");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menu_mantenimiento.add(jMenuItem2);
+
+        menu_item_cuentas_bancarias.setText("CUENTAS BANCARIAS");
+        menu_item_cuentas_bancarias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_item_cuentas_bancariasActionPerformed(evt);
+            }
+        });
+        menu_mantenimiento.add(menu_item_cuentas_bancarias);
+
         jMenuBar1.add(menu_mantenimiento);
 
         menu_compras.setText("COMPRAS");
+        menu_compras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_comprasActionPerformed(evt);
+            }
+        });
+
+        jMenuItem4.setText("REALIZAR COMPRA");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menu_compras.add(jMenuItem4);
+
+        jMenuItem5.setText("REPORT DE COMPRAS VARIOS");
+        menu_compras.add(jMenuItem5);
+
         jMenuBar1.add(menu_compras);
 
         menu_inventario.setText("INVENTARIO");
@@ -292,6 +329,37 @@ public class Menu_IU extends javax.swing.JFrame {
         frame.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Proveedor_IU frame = new Proveedor_IU();
+        escritorio.add(frame);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension framesize = frame.getSize();
+        frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
+        frame.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void menu_item_cuentas_bancariasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_item_cuentas_bancariasActionPerformed
+        CuentasBancarias_IU frame = new CuentasBancarias_IU();
+        escritorio.add(frame);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension framesize = frame.getSize();
+        frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
+        frame.show();
+    }//GEN-LAST:event_menu_item_cuentas_bancariasActionPerformed
+
+    private void menu_comprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_comprasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menu_comprasActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        Compra_IU frame = new Compra_IU();
+        escritorio.add(frame);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension framesize = frame.getSize();
+        frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
+        frame.show();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -340,12 +408,16 @@ public class Menu_IU extends javax.swing.JFrame {
     public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JToolBar jToolBar1;
     public javax.swing.JMenu menu_caja;
     public javax.swing.JMenu menu_compras;
     public javax.swing.JMenu menu_inventario;
     private javax.swing.JMenuItem menu_item_categoria;
+    private javax.swing.JMenuItem menu_item_cuentas_bancarias;
     private javax.swing.JMenuItem menu_item_marca;
     private javax.swing.JMenuItem menu_item_turno;
     private javax.swing.JMenuItem menu_item_usuario;

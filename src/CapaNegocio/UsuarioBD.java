@@ -44,7 +44,7 @@ public class UsuarioBD {
             }
             return tabla_temporal;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error al reportar BD", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Error al reportar UsuarioBD", JOptionPane.ERROR_MESSAGE);
             return null;
         }
 
@@ -68,7 +68,7 @@ public class UsuarioBD {
             rpta = pst.executeUpdate() == 1 ? true : false;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "error al registrar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Error al registrar UsuarioBD", JOptionPane.ERROR_MESSAGE);
             return rpta;
         }
         return rpta;
@@ -92,7 +92,7 @@ public class UsuarioBD {
             rpta = pst.executeUpdate() == 1 ? true : false;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "error al modificar");
+            JOptionPane.showMessageDialog(null, "Error al modificar UsuarioBD");
             return rpta;
         }
         return rpta;

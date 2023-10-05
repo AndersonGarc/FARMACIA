@@ -224,6 +224,11 @@ public class Menu_IU extends javax.swing.JFrame {
         menu_compras.add(jMenuItem4);
 
         jMenuItem5.setText("REPORT DE COMPRAS VARIOS");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         menu_compras.add(jMenuItem5);
 
         jMenuBar1.add(menu_compras);
@@ -359,6 +364,15 @@ public class Menu_IU extends javax.swing.JFrame {
         frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
         frame.show();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        ReporteComprasVarios_IU frame = new ReporteComprasVarios_IU();
+        escritorio.add(frame);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension framesize = frame.getSize();
+        frame.setLocation((desktopSize.width - framesize.width) / 2, (desktopSize.height - framesize.height) / 2);
+        frame.show();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments

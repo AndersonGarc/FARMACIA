@@ -28,9 +28,10 @@ public class Login_IU extends javax.swing.JFrame {
     public static int idasistencia;
 
     public Login_IU() {
-        initComponents();
+        initComponents();      
         setLocationRelativeTo(null);
         muestraimagen(lblFoto, "src/IMAGENES/doc.jpg");
+//        muestraimagen2(lblFoto2, "src/IMAGENES/pastilllas.jpg");
     }
 
     private String obtener_fecha_actual() {
@@ -71,6 +72,12 @@ public class Login_IU extends javax.swing.JFrame {
         labelName.setIcon(icon);
         this.repaint();
     }
+    private void muestraimagen2(JLabel labelName, String root) {
+        ImageIcon image = new ImageIcon(root);
+        Icon icon = new ImageIcon(image.getImage().getScaledInstance(50, 50, WIDTH));
+        labelName.setIcon(icon);
+        this.repaint();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -84,6 +91,7 @@ public class Login_IU extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         txtClave = new javax.swing.JPasswordField();
         lblFoto = new javax.swing.JLabel();
+        lblFoto2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,7 +179,9 @@ public class Login_IU extends javax.swing.JFrame {
                     .addComponent(txtClave))
                 .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
+                .addComponent(lblFoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
@@ -185,7 +195,9 @@ public class Login_IU extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,7 +210,7 @@ public class Login_IU extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(btnIngresar))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -226,7 +238,7 @@ public class Login_IU extends javax.swing.JFrame {
                     if (lista_turno.size() > 0) {
                         Menu_IU o_Menu_IU = new Menu_IU();
                         String fecha = obtener_fecha_actual();
-                        String hora = obtener_hora_actual();
+                        String hora = obtener_hora_actual();  
                         Asistencia o_Asistencia = new Asistencia();
                         AsistenciaBD o_AsistenciaBD = new AsistenciaBD();
 
@@ -384,6 +396,7 @@ public class Login_IU extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblFoto;
+    private javax.swing.JLabel lblFoto2;
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JTextField txtDni;
     // End of variables declaration//GEN-END:variables
